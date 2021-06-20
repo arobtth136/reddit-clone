@@ -15,7 +15,31 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('community_id')->constrained();
+            $table->string('title');
+            $table->string('picture');
+            $table->text('body');
+            $table->integer('likes');
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('comments', function (Blueprint $table){
+            $table->id();
+            $table->string('text');
+            $table->foreignId('post_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('comment_id')->nullable()->constrained();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('post_user', function (Blueprint $table){
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('post_id')->constrained();
+            $table->boolean('like');
+            $table->boolean('dislike');
         });
     }
 
