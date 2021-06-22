@@ -22,7 +22,7 @@ class CreateCommunitiesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('communities_user', function (Blueprint $table){
+        Schema::create('community_user', function (Blueprint $table){
            $table->foreignId('user_id')->constrained();
            $table->foreignId('community_id')->references('id')->on('communities');
            $table->timestamps();

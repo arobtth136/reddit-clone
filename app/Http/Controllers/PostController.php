@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $posts = Post::whereNull('deleted_at')->orderBy('created_at','desc')->paginate(6);
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -24,18 +26,24 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function store(Request $request)
     {
-        //
+        $post = Post::create([
+            'user_id' => Auth::user()->id,
+            'title' => $request->title,
+            'body' => $request->body,
+            'community_id' => $request->community_id,
+            'picture' => $request->picture]);
+        return view('post.show', compact('post'));
     }
 
     /**
