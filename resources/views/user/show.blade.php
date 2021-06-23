@@ -47,11 +47,18 @@
             </ul>
         </div>
     </div>
+    <div class="divider"></div>
     <div class="row">
         <div class="col s12">
             <ul class="collection with-header">
                 <li class="collection-header"><h4>Comunidades que administra</h4></li>
-                {{$user->created_communities}}
+                @if($user->created_communities()->count() > 0)
+                    @foreach($user->created_communities as $community)
+                        <a href="{{route('communities.show', ['community' => $community->id])}}" class="collection-item">{{$community->name}}</a>
+                    @endforeach
+                @else
+                    <li class="collection-item">No administra alguna comunidad aún</li>
+                @endif
             </ul>
         </div>
     </div>

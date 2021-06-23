@@ -8,7 +8,7 @@
                     <input type="text" id="title" name="title">
                     <label for="title">Titutlo</label>
                     @error('title')
-                    <span class="helper-text red-text">{{$message}}</span>
+                        <span class="helper-text red-text">{{$message}}</span>
                     @enderror
                 </div>
             </div>
