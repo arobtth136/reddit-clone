@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::view('/', 'home')->name('home');
+Route::view('/', 'post.index')->name('home');
 
 Route::get('user/{user}', 'UserController@show')->name('user');
+Route::resource('post', 'PostController');
