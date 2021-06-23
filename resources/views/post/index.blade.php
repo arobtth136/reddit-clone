@@ -1,9 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <a href="{{route('post.create')}}" class="waves-effect waves-light btn">Crear post</a>
+    @auth
+        <a href="{{route('post.create')}}" class="waves-effect waves-light btn">Crear post</a>
+    @endauth
     <div class="row">
         <div class="col">
-            <div class="card">Esto es carta</div>
+            <div class="card">Esto es card</div>
         </div>
     </div>
 @endsection

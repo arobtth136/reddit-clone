@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function communities(){
         return $this->belongsToMany(Community::class)->withPivot('user_id','community_id');
     }
+
+    public function created_communities(){
+        return $this->hasMany(Community::class);
+    }
 }
