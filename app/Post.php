@@ -23,4 +23,8 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function activity_users(){
+        return $this->belongsToMany(User::class)->withPivot('user_id','post_id','like','dislike');
+    }
 }

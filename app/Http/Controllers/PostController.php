@@ -11,6 +11,7 @@ class PostController extends Controller
 {
 
     public function like(Post $post){
+        dd($post);
         $post->likes += 1;
         $post->save();
     }
@@ -56,15 +57,10 @@ class PostController extends Controller
         return redirect()->route('post.show', compact('post'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Post $post)
     {
-        //
+        return view('post.show', compact('post'));
     }
 
     /**
