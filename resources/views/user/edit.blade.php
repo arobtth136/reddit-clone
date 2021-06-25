@@ -54,11 +54,11 @@
                 const contra = document.querySelector('#password').value
                 const verify = document.querySelector('#verify_password').value
                 if(contra === verify){
-                    if(document.querySelector('#error') !== undefined){
+                    if(document.querySelector('#error') !== null){
                         document.querySelector('#error').remove()
                     }
                 } else {
-                    if(document.querySelector('#errores') === undefined){
+                    if(document.querySelector('#errores') === null){
                         document.querySelector('#errores').innerHTML += `
                             <label class="helper-text red-text" id="error">las contraseñas no coinciden</label>
                         `

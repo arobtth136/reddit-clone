@@ -32,7 +32,10 @@
                         <li><a href="{{route('register')}}">Register</a></li>
                     @else
                         <li><a href="{{route('user', ['user' => Auth::id()])}}">Mi perfil</a></li>
-                        <li><a href="{{route('logout')}}">Cerrar sesión</a></li>
+                        <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     @endauth
                 </ul>
             </div>
@@ -43,6 +46,12 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    function logout(){
+        event.preventDefault()
+        document.getElementById('logout-form').submit()
+    }
+</script>
 @yield('scripts')
 </body>
 </html>

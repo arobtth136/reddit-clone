@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,10 +43,14 @@ class User extends Authenticatable
     }
 
     public function communities(){
-        return $this->belongsToMany(Community::class)->withPivot('user_id','community_id');
+        return $this->belongsToMany(Community::class)->withPivot('user_id','community_id','created_at');
     }
 
     public function created_communities(){
         return $this->hasMany(Community::class);
+    }
+
+    public function belongs_to_community(Community $community){
+        return is_null($community->users()->find(Auth::id()));
     }
 }

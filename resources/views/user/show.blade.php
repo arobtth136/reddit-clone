@@ -37,6 +37,9 @@
         <div class="col s12 m6">
             <ul class="collection with-header">
                 <li class="collection-header"><h4>Ultimos post</h4></li>
+                @if(Auth::id() === $user->id)
+                    <a href="{{route('post.create')}}" class="collection-item">Crear un nuevo post <i class="material-icons">create</i></a>
+                @endif
                 @if($user->posts()->count() > 0)
                     @foreach($user->posts as $post)
                         <a href="{{route('post.show', ['post' => $post->id])}}" class="collection-item">{{$post->title}}</a>
@@ -52,6 +55,9 @@
         <div class="col s12">
             <ul class="collection with-header">
                 <li class="collection-header"><h4>Comunidades que administra</h4></li>
+                @if(Auth::id() === $user->id)
+                    <a href="{{route('communities.create')}}" class="collection-item">Crear una nueva comunidad <i class="material-icons">create</i></a>
+                @endif
                 @if($user->created_communities()->count() > 0)
                     @foreach($user->created_communities as $community)
                         <a href="{{route('communities.show', ['community' => $community->id])}}" class="collection-item">{{$community->name}}</a>

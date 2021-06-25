@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Community;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::whereNull('deleted_at')->orderBy('created_at','desc')->paginate(6);
-        return view('post.index', compact('posts'));
+        $communities = Community::whereNull('deleted_at')->get();
+        return view('post.index', compact('posts','communities'));
     }
 
     /**

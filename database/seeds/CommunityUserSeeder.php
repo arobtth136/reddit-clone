@@ -14,11 +14,13 @@ class CommunityUserSeeder extends Seeder
         DB::table('community_user')->insert([
             0 => array(
                 'user_id' => 1,
-                'community_id' => 1
+                'community_id' => 1,
+                'created_at' => \Carbon\Carbon::now()
             ),
             1 => array(
                 'user_id' => 1,
-                'community_id' => 2
+                'community_id' => 2,
+                'created_at' => \Carbon\Carbon::now()
             )
         ]);
     }
