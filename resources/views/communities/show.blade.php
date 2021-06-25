@@ -13,7 +13,7 @@
     @elseif(Auth::check())
         <h6>Perteneces a esta comunidad desde {{Auth::user()->communities()->find($community->id)->pivot->created_at}}</h6>
     @else
-        <a href="{{route('login')}}" class="waves-effect waves-light btn">Iniciar sesión para acceder</a>
+        <a href="{{route('login')}}" class="waves-effect waves-light btn">Iniciar sesión para unirte a esta comunidad</a>
     @endif
     @if(Auth::check() && !Auth::user()->belongs_to_community($community))
         <form action="{{route('post.store')}}" method="post">

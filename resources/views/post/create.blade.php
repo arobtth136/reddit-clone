@@ -31,12 +31,6 @@
                     <label for="community_id">Comunidad</label>
                 </div>
             </div>
-            <div class="col s6">
-                <div class="input-field col s12">
-                    <input type="text" name="picture" id="picture">
-                    <label for="picture">URL de imagen</label>
-                </div>
-            </div>
         </div>
         <input type="submit" class="waves-effect waves-light btn" value="Postear">
     </form>
