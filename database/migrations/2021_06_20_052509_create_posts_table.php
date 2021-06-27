@@ -18,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('community_id')->constrained();
             $table->string('title');
-            $table->text('picture');
             $table->text('body');
             $table->integer('likes')->default(0);
             $table->timestamps();
@@ -40,6 +39,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('post_id')->constrained();
             $table->boolean('like');
             $table->boolean('dislike');
+            $table->timestamps();
         });
     }
 

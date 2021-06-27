@@ -8,7 +8,7 @@
                     <input type="text" id="title" name="title">
                     <label for="title">Titutlo</label>
                     @error('title')
-                    <span class="helper-text red-text">{{$message}}</span>
+                        <span class="helper-text red-text">{{$message}}</span>
                     @enderror
                 </div>
             </div>
@@ -29,12 +29,6 @@
                         @endforeach
                     </select>
                     <label for="community_id">Comunidad</label>
-                </div>
-            </div>
-            <div class="col s6">
-                <div class="input-field col s12">
-                    <input type="text" name="picture" id="picture">
-                    <label for="picture">URL de imagen</label>
                 </div>
             </div>
         </div>

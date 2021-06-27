@@ -23,37 +23,58 @@
     <div class="divider"></div>
     <div class="row">
         <div class="col s12 m6">
-            <ul class="collection with-header">
-                <li class="collection-header"><h4>Comunidades a las que pertenece</h4></li>
-                @if($user->communities()->count() > 0)
-                    @foreach($user->communities as $community)
-                        <a href="{{route('communities.show', ['community' => $community->id])}}" class="collection-item">{{$community->name}}</a>
-                    @endforeach
-                @else
-                    <li class="collection-item">No pertenece a alguna comunidad aún</li>
-                @endif
-            </ul>
-        </div>
-        <div class="col s12 m6">
-            <ul class="collection with-header">
-                <li class="collection-header"><h4>Ultimos post</h4></li>
-                @if($user->posts()->count() > 0)
-                    @foreach($user->posts as $post)
-                        <a href="{{route('post.show', ['post' => $post->id])}}" class="collection-item">{{$post->title}}</a>
-                    @endforeach
-                @else
-                    <li class="collection-item">No se ha publicado nada aún</li>
-                @endif
+            <ul class="collapsible" id="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">collections_bookmark</i> Comunidades a las que pertenece</div>
+                    <div class="collapsible-body">
+                        @if($user->communities()->count() > 0)
+                            @foreach($user->communities as $community)
+                                <p><a href="{{route('communities.show', ['community' => $community->id])}}">{{$community->name}}</a></p>
+                            @endforeach
+                        @else
+                            <p>No pertenece a alguna comunidad aún</p>
+                        @endif
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">import_contacts</i> Publicaciones en comunidades</div>
+                    <div class="collapsible-body">
+                        @if(Auth::id() === $user->id)
+                            <h5><a href="{{route('post.create')}}">Crear un nuevo post <i class="material-icons">create</i></a></h5>
+                        @endif
+                        @if($user->posts()->count() > 0)
+                            @foreach($user->posts()->limit(5)->get() as $post)
+                                <p><a href="{{route('post.show', ['post' => $post->id])}}">{{$post->title}}</a></p>
+                            @endforeach
+                         @else
+                            <p>No se ha publicado nada aún</p>
+                        @endif
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">device_hub</i> Comunidades que administra</div>
+                    <div class="collapsible-body">
+                        @if(Auth::id() === $user->id)
+                            <h5><a href="{{route('communities.create')}}" class="collection-item">Crear una nueva comunidad <i class="material-icons">create</i></a></h5>
+                        @endif
+                        @if($user->created_communities()->count() > 0)
+                            @foreach($user->created_communities as $community)
+                                <p><a href="{{route('communities.show', ['community' => $community->id])}}">{{$community->name}}</a></p>
+                            @endforeach
+                        @else
+                            <p>No administra alguna comunidad aún</p>
+                        @endif
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col s12">
-            <ul class="collection with-header">
-                <li class="collection-header"><h4>Comunidades que administra</h4></li>
-                {{$user->created_communities}}
-            </ul>
-        </div>
-    </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            M.Collapsible.init(document.querySelector('#collapsible'))
+        })
+    </script>
 @endsection
 

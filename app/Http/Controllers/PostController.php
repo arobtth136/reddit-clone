@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Community;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
-     */
+
+    public function like(Post $post){
+        dd($post);
+        $post->likes += 1;
+        $post->save();
+    }
+
+    public function dislike(Post $post){
+
+    }
+
     public function index()
     {
-        $posts = Post::whereNull('deleted_at')->orderBy('created_at','desc')->paginate(6);
-        return view('post.index', compact('posts'));
+        $posts = Post::whereNull('deleted_at')->orderBy('created_at','desc')->get();
+        $communities = Community::whereNull('deleted_at')->get();
+        return view('post.index', compact('posts','communities'));
     }
 
     /**
@@ -33,28 +41,26 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => 'required|min:5',
+            'body' => 'required|max:300',
+        ]);
         $post = Post::create([
             'user_id' => Auth::user()->id,
-            'title' => $request->title,
-            'body' => $request->body,
-            'community_id' => $request->community_id,
-            'picture' => $request->picture]);
-        return view('post.show', compact('post'));
+            'title' => $validated['title'],
+            'body' => $validated['body'],
+            'community_id' => $request->community_id]);
+        return redirect()->route('post.show', compact('post'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Post $post)
     {
-        //
+        return view('post.show', compact('post'));
     }
 
     /**
